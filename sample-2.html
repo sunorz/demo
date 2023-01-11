@@ -1,0 +1,51 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>平缓的回到顶部</title>
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<style>
+	#topcontrol{
+		position: fixed;
+		bottom: 5%;
+		right: 5%;
+		cursor: pointer;
+		display: none;
+	}
+</style>
+<script src="js/jquery-3.1.1.min.js"></script>
+<script>
+$(function(){
+var threshold = 500;//阀值（px）
+var speed = 800;//速度（ms）
+	$(window).scroll(function(){
+		if($(window).scrollTop()>500)
+	   {		   
+		  $("#topcontrol").fadeIn();
+	   }
+	   else if($(window).scrollTop()<500)
+	   {
+		   $("#topcontrol").fadeOut();
+	   }
+	});
+$("#topcontrol").click(function(){
+	 $("html,body").animate({scrollTop: '0px'}, 800);
+});
+	   
+  
+});
+</script>
+</head>
+<body>
+<!--Copyright By Sunplace-->
+<div style="height: 4000px;padding-right: 10px;">（顶部）下拉或下滑
+<div class="log">更新内容：<br/><span>2.0</span>&nbsp;at&nbsp;Apr.13th,2017&nbsp;&nbsp;#重写JQuery。<br/><span>2.1</span>&nbsp;at&nbsp;Jul.26th,2019&nbsp;&nbsp;#修复点击无反应的问题。<br/>
+</div>
+</div>
+<div style="padding-right: 10px;">（底部）</div>
+<div id="topcontrol" title="返回顶部">
+<img src="imgs/2/gotop.png" width="32" height="32"/>
+</div>
+</body>
+</html>

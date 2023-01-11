@@ -1,0 +1,44 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>代码显示</title>
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<link href="css/39/main.css" rel="stylesheet" type="text/css">
+<script src="js/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+<!--Copyright By Sunplace-->
+<div id="wrap" style="width: 90%;margin: 20px auto;background: #fff;padding: 1em;">
+<h3>使用说明</h3>
+<b>1.引入CSS和JS文件</b>
+<pre class="codeblock" line="1,3,4">&lt;link href=&quot;css/codeboard.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;
+&lt;!--代码部分--&gt;
+&lt;script src=&quot;js/jquery.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/codeboard.min.js&quot;&gt;&lt;/script&gt;</pre>
+<b>2.调用</b>
+<pre class="codeblock">&lt;pre class=&quot;codeblock&quot;&gt;/*代码片段*/&lt;/pre&gt;</pre>
+<p>格式：&lt;pre class=&quot;codeblock&quot;  <b>start</b>=&quot;6&quot; <b>line</b>=&quot;7,9&quot;&gt;<br/>
+start:起始行号（缺省为1）<br/>
+line:需要高亮的行号（缺省为不高亮）</p>
+示例（从第6行开始，7和9行高亮）：
+<pre class="codeblock" start="6" line="7,9">
+public class HelloWorld(){	
+
+	public static void main(String[] args)
+	{
+		System.out.print("Hello World!");		
+	}	
+	
+}
+</pre>
+<b>3.其他</b>
+<p>
+	Wordpress等博客中引用需覆盖原来的样式。
+</p>
+</div>
+<script src="js/39/main.js"></script>
+<div class="log">更新内容：<br><span>1.1</span>&nbsp;at&nbsp;Aug.16th,2017&nbsp;&nbsp;#改回ul显示行号。&nbsp;&nbsp;#去除行之间的空行。</div>
+</body>
+</html>
