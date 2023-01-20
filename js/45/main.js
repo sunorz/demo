@@ -46,6 +46,6 @@ var arr = [{
 $(".innerUl").ProTree({
 	arr: arr,
 	simIcon: "fa fa-file",
-	mouIconOpen: "fa fa-play fa-rotate-90",
-	mouIconClose:"fa fa-play"
+	mouIconOpen: "fa fa-chevron-down",
+	mouIconClose:"fa fa-chevron-right"
 });

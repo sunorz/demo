@@ -6,9 +6,9 @@
 				//单个文件图标
 				this.simIcon = options.simIcon || "";
 				//多个文件打开图标
-				this.mouIconOpen = options.mouIconOpen || "fa fa-folder-open-o";
+				this.mouIconOpen = options.mouIconOpen || "fa fa-folder-open";
 				//多个文件关闭图标
-				this.mouIconClose = options.mouIconClose || "fa fa-folder-o";
+				this.mouIconClose = options.mouIconClose || "fa fa-folder";
 				//回调函数
 				this.callback = options.callback || function() {};
 				//初始化
@@ -51,8 +51,8 @@
 				arr.map(function(item) {
 					var lihtml = "<li>";
 					if(item.child && item.child.length > 0) {
-						lihtml += "<i ischek='true' class='" + self.mouIconOpen + "' style='font-size:10%;color:#6e6e6e;cursor: pointer;'></i>" +
-							"<span id='" + item.id + "'><i class='fa fa-folder' style='font-size:130%;color:#7fb9f2;'></i>" + item.name + "</span>"
+						lihtml += "<i ischek='true' class='" + self.mouIconOpen + "' style='font-size:10%;color:#6e6e6e;cursor: pointer;transform:translateY(-25%);'></i>" +
+							"<span id='" + item.id + "'><i class='fa fa-folder-open' style='font-size:130%;color:#7fb9f2;'></i>" + item.name + "</span>"
 						var _ul = self.proHTML(item.child);
 						lihtml += _ul + "</li>";
 					} 
@@ -65,7 +65,7 @@
 							}
 					
 					else {
-						lihtml += "<i class='" + self.simIcon + "' style='color:#959595;'></i>" +
+						lihtml += "<i class='" + self.simIcon + "' style='color:#79cb4d;'></i>" +
 							"<span id='" + item.id + "'>" + item.name + "</span>";
 					}
 					ulHtml += lihtml;
@@ -77,15 +77,16 @@
 				var self = this;
 				this.element.find(".menuUl li i").click(function() {
 					var ischek = $(this).attr("ischek");
-					if(ischek == 'true') {
-						var menuUl = $(this).closest("li").children(".menuUl");
-						$(this).removeClass(self.mouIconOpen).addClass(self.mouIconClose)
+					var menuUl = $(this).closest("li").children(".menuUl");
+					if(ischek == 'true') {						
+						$(this).removeClass(self.mouIconOpen).addClass(self.mouIconClose);
+						$(this).parent("li").find(".fa-folder-open").removeClass("fa-folder-open").addClass("fa-folder");
 						menuUl.hide();
 						$(this).attr("ischek", 'false');
 					} else if(ischek == 'false') {
-						var menuUl = $(this).closest("li").children(".menuUl");
+						$(this).removeClass(self.mouIconClose).addClass(self.mouIconOpen);
+						$(this).parent("li").find(".fa-folder").removeClass("fa-folder").addClass("fa-folder-open");
 						menuUl.show();
-						$(this).removeClass(self.mouIconClose).addClass(self.mouIconOpen)
 						$(this).attr("ischek", 'true')
 					}
 				});
