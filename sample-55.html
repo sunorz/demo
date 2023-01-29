@@ -17,7 +17,7 @@ textarea{resize:vertical;width:80%;min-height: 200px;padding: 1rem;font-size: 1r
 <div class="markdown-body" id="result"></div>
        
 <script>
-    var text ='> 支持表格，原始CSS：[github-markdown.css](https://github.com/sindresorhus/github-markdown-css/blob/main/github-markdown.css){:target="_blank"}';
+    var text ='> 支持表格，原始CSS：[github-markdown.css](https://github.com/sindresorhus/github-markdown-css/blob/main/github-markdown.css)';
     var converter = new showdown.Converter({tables: true, strikethrough: true});
     $('#result').html(converter.makeHtml(text));
     $("#content").keyup(function(){
