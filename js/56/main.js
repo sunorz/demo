@@ -21,5 +21,12 @@ if (language == "en") {
 bookname = books[1].title.toString();
 price = parseFloat(books[1].price);
 document.write(
-  "《" + bookname + "》的语言为" + language + ",售价为¥" + price * 0.8
+  "《" +
+    bookname +
+    "》的语言为" +
+    language +
+    ",原价为¥" +
+    price +
+    "，现售价为¥" +
+    price * 0.8
 );
