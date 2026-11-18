@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>即时搜索</title>
-<link href="css/prism.min.css" rel="stylesheet" type="text/css">
+<link href="css/39/main.css" rel="stylesheet" type="text/css">
 
 <style>
 	body{font-family:Source Code Pro,"微软雅黑";background-color: #cce8cf;}
@@ -16,23 +16,6 @@
 	li:hover,.cur{background: #4D8CFB;color: #fff;}
 	input{padding:0;border:  solid 1px #000;outline: none;font-size: 24px;line-height: 24px;margin-top: 1em;}
 </style>
-
-<style>
-.code-section{max-width:900px;margin:2em auto;padding:0 1em;text-align:left;}
-.code-section h2{margin:0 0 .4em;font-size:20px;}
-.code-section p{margin:0 0 1em;color:#333;}
-pre.code-display{position:relative;margin:0;text-align:left;overflow:auto;}
-.copy-code{position:absolute;top:8px;right:8px;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;padding:7px;border:0;border-radius:6px;background:transparent;color:#666;cursor:pointer;opacity:0;pointer-events:none;transition:opacity 120ms,background-color 120ms,color 120ms;}
-.copy-code:hover{background:#e8e8e8;color:#000;}
-.copy-code:focus-visible{outline:2px solid #4D8CFB;outline-offset:2px;}
-pre.code-display:hover .copy-code,.copy-code:focus-visible{opacity:1;pointer-events:auto;}
-.copy-code svg{width:18px;height:18px;flex:none;}
-.copy-code .check-icon{display:none;}
-.copy-code.copied .copy-icon{display:none;}
-.copy-code.copied .check-icon{display:block;}
-@media (hover:none),(pointer:coarse){.copy-code{opacity:1;pointer-events:auto;}}
-</style>
-
 <script src="js/jquery-3.1.1.min.js"></script>
 <script> 
 $(function(){
@@ -154,7 +137,7 @@ function Setstyle(i){
 <section class="code-section">
   <h2>后端代码</h2>
   <p>GitHub Pages 不能运行 PHP，这里只展示后端代码供参考。文件：inc/41/do_action.php</p>
-  <pre class="code-display language-php"><code class="language-php">&lt;?php
+  <pre class="codeblock">&lt;?php
  $resarry = array(
 	 array(&quot;Ana&quot;,&quot;Ana是什么歌曲？&quot;),
 	 array(&quot;Angel&quot;,&quot;Angel的77个含义。&quot;),
@@ -196,81 +179,16 @@ if($_POST[&#x27;title&#x27;]!=null){
 } 
 }
 
-?&gt;</code></pre>
+?&gt;</pre>
 </section>
 
 <a id="back-home-link" href="index.html" style="position:fixed;left:16px;bottom:16px;z-index:99999;display:inline-block;padding:10px 18px;border:1px solid rgba(255,255,255,.4);border-radius:999px;background:#1a1a1a;color:#fff;font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;font-size:14px;font-weight:600;line-height:1.4;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.35)">← 返回首页</a>
 
-<script src="js/prism-core.min.js"></script>
-<script src="js/prism-markup.min.js"></script>
-<script src="js/prism-clike.min.js"></script>
-<script src="js/prism-markup-templating.min.js"></script>
-<script src="js/prism-php.min.js"></script>
-<script>
-(function(){
-  function addCopyButtons(){
-    document.querySelectorAll('pre.code-display').forEach(function(pre){
-      if(pre.querySelector('.copy-code')) return;
-      var code = pre.querySelector('code');
-      if(!code) return;
-      var source = code.textContent;
-      var button = document.createElement('button');
-      button.type = 'button';
-      button.className = 'copy-code';
-      button.setAttribute('aria-label','复制代码');
-      button.title = '复制代码';
-      button.innerHTML = '<svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg>';
-      pre.appendChild(button);
-      var reset;
-      function resetButton(){
-        button.classList.remove('copied');
-        button.setAttribute('aria-label','复制代码');
-        button.title = '复制代码';
-      }
-      pre.addEventListener('mouseenter', function(){ clearTimeout(reset); resetButton(); });
-      pre.addEventListener('mouseleave', function(){
-        clearTimeout(reset);
-        reset = setTimeout(resetButton, 140);
-      });
-      button.addEventListener('click', async function(){
-        var copied = false;
-        try {
-          await navigator.clipboard.writeText(source);
-          copied = true;
-        } catch(e) {
-          var selection = window.getSelection();
-          var previous = [];
-          for(var i=0;i<selection.rangeCount;i++) previous.push(selection.getRangeAt(i).cloneRange());
-          var range = document.createRange();
-          range.selectNodeContents(code);
-          selection.removeAllRanges();
-          selection.addRange(range);
-          var copyPlainText = function(event){
-            event.preventDefault();
-            event.clipboardData.setData('text/plain', source);
-          };
-          document.addEventListener('copy', copyPlainText);
-          try { copied = document.execCommand('copy'); } catch(err) {}
-          finally {
-            document.removeEventListener('copy', copyPlainText);
-            selection.removeAllRanges();
-            previous.forEach(function(item){ selection.addRange(item); });
-          }
-        }
-        if(!button.isConnected) return;
-        button.classList.toggle('copied', copied);
-        var message = copied ? '已复制' : '复制失败，请手动选择代码复制';
-        button.setAttribute('aria-label', message);
-        button.title = message;
-      });
-    });
-  }
-  if(document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', addCopyButtons);
-  } else {
-    addCopyButtons();
-  }
-})();
-</script>
+<style>
+.code-section{max-width:900px;margin:2em auto;padding:0 1em;text-align:left;}
+.code-section h2{margin:0 0 .4em;font-size:20px;}
+.code-section p{margin:0 0 1em;color:#333;}
+</style>
+<script src="js/39/main.js"></script>
 </body>
 </html>
