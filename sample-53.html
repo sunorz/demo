@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>无缝滚动多个元素</title>
 	<link href="css/main.css" rel="stylesheet" type="text/css">
 	<style>
@@ -15,10 +16,10 @@
 	</head>
 
 <body>
-	<div id="content2-2" style="margin: 20px auto;width: 1290px;position: relative;">
+	<div id="content2-2" style="margin: 20px auto;width: 1290px;max-width:100%;box-sizing:border-box;position: relative;">
 		<div id="prev" style="position: absolute;top:0px;left: -20px;width: 40px;height: 200px;line-height: 200px;text-align: center;">&lt;</div>
 		<div id="next" style="position: absolute;top:0px;right: 0px;width: 40px;height: 200px;line-height: 200px;text-align: center;">&gt;</div>
-		<div id="wrap" style="margin: 0 auto;width: 1210px;overflow: hidden;position: relative;height: 200px;"><ul id="content"></ul></div>
+		<div id="wrap" style="margin: 0 auto;width: 1210px;max-width:100%;overflow: hidden;position: relative;height: 200px;"><ul id="content"></ul></div>
 	</div>
 	<script>
 	var gallery = {
