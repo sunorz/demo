@@ -1,35 +1,81 @@
 <!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-<link rel="stylesheet" type="text/css" href="./css/55/main.css" />
-<style>
-:root{
-    color-scheme: light dark;
-  }
-textarea{resize:vertical;width:80%;min-height: 200px;padding: 1rem;font-size: 1rem;margin-bottom: 1rem;}
-</style>
-<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-<script src="https://cdn.bootcdn.net/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Markdown 编辑器 · 隐喻与留白</title>
+<link rel="stylesheet" href="./css/55/main.css">
+<script src="./js/55/main.js" defer></script>
 </head>
 <body>
-<div class="wrap">
-<textarea id="content" placeholder="输入markdown代码"></textarea>  
-</div>                 
-<div class="markdown-body" id="result"></div>
-       
-<script>
-    var text ='> 支持表格，原始CSS：[github-markdown.css](https://github.com/sindresorhus/github-markdown-css/blob/main/github-markdown.css)';
-    var converter = new showdown.Converter({tables: true, strikethrough: true});
-    $('#result').html(converter.makeHtml(text));
-    $("#content").keyup(function(){
-    text = $("#content").val();    
-    var html = converter.makeHtml(text);
-    $('#result').html(html);
-    });
-    $(document).ready( function () {
-   $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank');
-})
-    </script>
+<div id="app" class="mode-split">
+  <header class="app-header">
+    <div class="header-row">
+      <button type="button" class="tool-btn" id="menuBtn" aria-label="文章列表"></button>
+      <span class="header-spacer"></span>
+      <span class="save-label" id="saveLabel" aria-live="polite"></span>
+      <button type="button" class="tool-btn" id="buildBtn" aria-label="生成网站" title="生成"></button>
+      <button type="button" class="tool-btn" id="build25Btn" aria-label="生成 25% 网站" title="生成 25%（先截取到 25% 再生成）"></button>
+      <button type="button" class="tool-btn" id="paneBtn" aria-label="预览" title="预览" aria-pressed="false"></button>
+      <button type="button" class="tool-btn" id="newBtn" aria-label="新建文章" title="新建文章"></button>
+      <button type="button" class="tool-btn" id="newEnBtn" aria-label="新建英文文章" title="新建英文文章"></button>
+      <button type="button" class="publish-btn" id="publishBtn" hidden>发布</button>
+    </div>
+    <div class="title-row">
+      <input id="titleInput" class="title-input" aria-label="文章标题" placeholder="隐喻与留白" spellcheck="false">
+    </div>
+  </header>
 
+  <div class="fm-bar" id="fmBar">
+    <label for="fmDate">日期</label>
+    <input id="fmDate" type="date" aria-label="发布日期" spellcheck="false">
+    <span class="fm-path" id="fmPath"></span>
+    <span class="fm-draft" id="fmDraft" title="草稿" aria-label="草稿" hidden></span>
+  </div>
 
+  <main class="panes" id="panes">
+    <div class="editor-pane" id="editorPane">
+      <textarea id="editor" aria-label="Markdown 编辑区" spellcheck="false" placeholder="在这里写 Markdown（支持粗体、斜体、列表、引用、链接、标题和脚注）…"></textarea>
+    </div>
+    <div class="pane-divider" id="paneDivider"></div>
+    <div class="preview-pane" id="previewPane" aria-label="预览区">
+      <div class="md-preview" id="preview"></div>
+    </div>
+  </main>
+
+  <div class="welcome" id="welcome" hidden>
+    <p class="welcome-title">还没有文章</p>
+    <p class="welcome-text">新建会生成一篇中文，左边写，右边立刻看到排版效果。支持完整 Markdown（标题、表格、任务列表、脚注），写完自动保存到本机。</p>
+    <button type="button" class="welcome-new" id="welcomeNew">新建第一篇</button>
+  </div>
+
+  <footer class="statusbar" id="statusbar">
+    <span id="charCount">0 字</span>
+    <span id="lineCount">0 行</span>
+    <span class="save-label-mini" id="saveLabelMini"></span>
+    <span class="status-spacer"></span>
+    <span class="status-note">本机演示 · 数据只存浏览器</span>
+  </footer>
+
+  <div class="toolbar-wrap" id="toolbarWrap">
+    <div class="floating-toolbar capsule capsule-mobile" id="capsuleMobile"></div>
+    <div class="floating-toolbar capsule capsule-desktop" id="capsuleDesktop"></div>
+  </div>
+
+  <div class="drawer-root" id="drawerRoot" hidden>
+    <button type="button" class="drawer-backdrop" id="drawerBackdrop" aria-label="关闭文章列表"></button>
+    <div class="drawer" role="dialog" aria-label="文章列表">
+      <div class="drawer-head">
+        <span class="drawer-title">文章</span>
+        <button type="button" class="drawer-import" id="importBtn">导入 .md</button>
+      </div>
+      <ul class="drawer-list" id="drawerList"></ul>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" hidden></div>
+  <input type="file" id="importInput" accept=".md,text/markdown,text/plain" hidden>
+</div>
 </body>
 </html>

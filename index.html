@@ -7,20 +7,6 @@
   <title>前端小样 · Sunplace</title>
   <meta name="description" content="Sunplace 的前端实验目录，收录界面布局、动效和交互示例。">
   <link rel="stylesheet" href="css/home.css">
-  <script>
-    (() => {
-      let saved;
-      try {
-        saved = localStorage.getItem('sunplace-theme');
-      } catch {
-        // Storage may be blocked by browser settings.
-      }
-      const systemTheme = matchMedia('(prefers-color-scheme: dark)');
-      document.documentElement.dataset.theme = saved === 'light' || saved === 'dark'
-        ? saved
-        : (systemTheme.matches ? 'dark' : 'light');
-    })();
-  </script>
   <script src="js/home.js" defer></script>
 </head>
 <body>
@@ -28,7 +14,6 @@
     <div class="shell header-inner">
       <a href="./" class="brand"><span class="brand-icon" aria-hidden="true">&lt;/&gt;</span>Sunplace</a>
       <a class="source-link" href="https://github.com/sunorz/demo" target="_blank" rel="noreferrer">查看源码 <span aria-hidden="true">↗</span></a>
-      <button class="theme-toggle" type="button" aria-pressed="false" hidden>深色模式</button>
     </div>
   </header>
 
@@ -53,7 +38,7 @@
       <div class="catalog-heading">
         <div>
           <h2 id="catalog" tabindex="-1">示例目录</h2>
-          <p class="result-count" role="status">共 59 项</p>
+          <p class="result-count" role="status">共 60 项</p>
         </div>
         <label class="search" hidden>
           <span class="search-icon" aria-hidden="true"></span>
@@ -74,6 +59,7 @@
           <button type="button" aria-pressed="false">jQuery Mobile</button>
           <button type="button" aria-pressed="false">RWD</button>
           <button type="button" aria-pressed="false">Markdown</button>
+          <button type="button" aria-pressed="false">MuseAI</button>
       </div>
 
       <ul class="grid" role="list">
@@ -455,11 +441,11 @@
             <span class="metadata"><span class="tag">CSS3</span><span class="version">v1.1</span></span>
           </a>
         </li>
-        <li class="demo-item" data-tags="Markdown">
+        <li class="demo-item" data-tags="Markdown|MuseAI">
           <a class="demo-card" data-accent="amber" href="sample-55.html" target="_blank" rel="noreferrer">
             <span class="card-top"><span class="index">55</span><span class="arrow" aria-hidden="true">↗</span></span>
             <span class="card-title">Markdown编辑器</span>
-            <span class="metadata"><span class="tag">Markdown</span><span class="version">v1.0</span></span>
+            <span class="metadata"><span class="tag">Markdown</span><span class="tag">MuseAI</span><span class="version">v2.0</span></span>
           </a>
         </li>
         <li class="demo-item" data-tags="jQuery|AJAX">
@@ -467,6 +453,13 @@
             <span class="card-top"><span class="index">56</span><span class="arrow" aria-hidden="true">↗</span></span>
             <span class="card-title">JSON赋值</span>
             <span class="metadata"><span class="tag">jQuery</span><span class="tag">AJAX</span><span class="version">v1.0</span></span>
+          </a>
+        </li>
+        <li class="demo-item" data-tags="MuseAI|CSS">
+          <a class="demo-card" data-accent="blue" href="sample-57.html" target="_blank" rel="noreferrer">
+            <span class="card-top"><span class="index">57</span><span class="arrow" aria-hidden="true">↗</span></span>
+            <span class="card-title">邀请码小票</span>
+            <span class="metadata"><span class="tag">MuseAI</span><span class="tag">CSS</span><span class="version">v1.0</span></span>
           </a>
         </li>
         <li class="demo-item" data-tags="jQuery">

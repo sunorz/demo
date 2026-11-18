@@ -1,32 +1,4 @@
 const search = document.querySelector('#search');
-const themeToggle = document.querySelector('.theme-toggle');
-const systemTheme = matchMedia('(prefers-color-scheme: dark)');
-let manualTheme;
-try {
-  const saved = localStorage.getItem('sunplace-theme');
-  if (saved === 'dark' || saved === 'light') manualTheme = saved;
-} catch {
-  // The switch still works for this visit when storage is blocked.
-}
-
-function applyTheme() {
-  const theme = manualTheme ?? (systemTheme.matches ? 'dark' : 'light');
-  document.documentElement.dataset.theme = theme;
-  themeToggle.setAttribute('aria-pressed', String(theme === 'dark'));
-}
-
-themeToggle.addEventListener('click', () => {
-  manualTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-  applyTheme();
-  try {
-    localStorage.setItem('sunplace-theme', manualTheme);
-  } catch {
-    // Keep the current theme even if it cannot be saved.
-  }
-});
-systemTheme.addEventListener('change', applyTheme);
-applyTheme();
-themeToggle.hidden = false;
 
 const filters = document.querySelector('.filters');
 const buttons = [...filters.querySelectorAll('button')];
