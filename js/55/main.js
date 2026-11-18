@@ -10,13 +10,11 @@ function icon(inner) {
 }
 const ICONS = {
   menu: icon('<line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>'),
-  wrench: icon('<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>'),
-  truncate: icon('<line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="13" y2="18"/><circle cx="16" cy="18" r="1.3" fill="currentColor" stroke="none"/><circle cx="19" cy="18" r="1.3" fill="currentColor" stroke="none"/><circle cx="22" cy="18" r="1.3" fill="currentColor" stroke="none"/>'),
   eye: icon('<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>'),
   edit: icon('<path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>'),
   plus: icon('<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>'),
-  endoc: icon('<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><text x="12" y="17.5" text-anchor="middle" font-size="8" font-weight="700" fill="currentColor" stroke="none">EN</text>'),
-  draft: icon('<path d="M12.659 22H18a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v9.34"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M10.378 12.622a1 1 0 0 1 3 3.003L8.36 20.637a2 2 0 0 1-.854.506l-2.867.837a.5.5 0 0 1-.62-.62l.836-2.869a2 2 0 0 1 .506-.853z"/>'),
+  download: icon('<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>'),
+  home: icon('<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>'),
   trash: icon('<path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>'),
   bold: icon('<path d="M6 4h8a4 4 0 0 1 0 8H6z"/><path d="M6 12h9a4 4 0 0 1 0 8H6z"/>'),
   italic: icon('<line x1="19" y1="4" x2="10" y2="4"/><line x1="14" y1="20" x2="5" y2="20"/><line x1="15" y1="4" x2="9" y2="20"/>'),
@@ -208,41 +206,16 @@ function renderMarkdown(src) {
   return html;
 }
 
+
 /* ---------- Document store (localStorage only) ---------- */
-const LS_KEY = 'storycms-demo-docs-v1';
+const LS_KEY = 'md-editor-demo-docs-v2';
 
-function seedDocs() {
-  return [
-    {
-      path: 'posts/story1.md',
-      title: '雾桥',
-      date: '2026-11-10',
-      draft: false,
-      body: '# 雾桥\n\n清晨五点，桥上的雾还没有散。守桥人老秦把登记簿摊在膝盖上，一笔一画地写下今天的日期——这是他退休前最后一个班。\n\n> 雾大的时候，人容易把心里的话说给桥听。\n\n第一个过桥的是个背画板的学生，鞋带散着，跑得满头是汗。老秦叫住他：**“慢些，桥面滑。”**学生回头笑了一下，那笑容让老秦想起四十年前的自己。\n\n登记簿的最后一页，记着一件他从没跟人提过的事[^1]。雾散之前，他把那一页轻轻撕了下来，叠好，放进口袋。\n\n[^1]: 1986 年的一个雾夜，有个陌生人替他值了半班，天亮前离开，没有留下名字。',
-    },
-    {
-      path: 'posts/story1.en.md',
-      title: 'The Fog Bridge',
-      date: '2026-11-10',
-      draft: false,
-      body: '# The Fog Bridge\n\nAt five in the morning the fog on the bridge had not yet lifted. Old Qin, the bridge keeper, opened the register on his knees and wrote down the date, stroke by stroke — this was his last shift before retirement.\n\n> When the fog is thick, people tend to tell the bridge what is on their minds.\n\nThe first to cross was a student with a drawing board on his back, shoelaces undone, running and sweating. Qin called out: **"Slow down, the deck is slippery."** The student turned and smiled, and the smile reminded Qin of himself, forty years ago.\n\nOn the last page of the register was something he had never told anyone[^1]. Before the fog lifted, he tore the page out gently, folded it, and put it in his pocket.\n\n[^1]: On a foggy night in 1986, a stranger covered half his shift and left before dawn, without a name.',
-    },
-    {
-      path: 'posts/story2.md',
-      title: '未寄出的信',
-      date: '2026-11-17',
-      draft: true,
-      body: '## 提纲\n\n- [x] 邮局旧址的外景\n- [ ] 退信柜里的第三格抽屉\n- [ ] 结尾那句不解释的告别\n\n## 人物\n\n| 人物 | 身份 | 备注 |\n| --- | --- | --- |\n| 林晚 | 邮递员 | 在职第 11 年 |\n| 陈默 | 寄件人 | 每年同一天来 |\n\n信封上的地址，是二十年前就拆掉的那条街。',
-    },
-  ];
-}
-
-let docs = [];
-let activePath = null;
+let docs = []; // [{name, body}] — plain local documents, no front matter
+let activeName = null;
 
 function persist() {
   try {
-    localStorage.setItem(LS_KEY, JSON.stringify({ docs, activePath }));
+    localStorage.setItem(LS_KEY, JSON.stringify({ docs, activeName }));
   } catch { /* storage blocked: edits still work for this visit */ }
 }
 
@@ -252,15 +225,14 @@ function loadStore() {
     if (raw) {
       const data = JSON.parse(raw);
       if (Array.isArray(data.docs)) {
-        docs = data.docs;
-        activePath = data.activePath;
-        return;
+        docs = data.docs.filter(d => d && typeof d.name === 'string' && typeof d.body === 'string');
+        activeName = data.activeName;
       }
     }
-  } catch { /* fall through to seeds */ }
-  docs = seedDocs();
-  activePath = docs[0].path;
-  persist();
+  } catch { /* start empty */ }
+  if (!docs.some(d => d.name === activeName)) {
+    activeName = docs.length ? docs[0].name : null;
+  }
 }
 
 /* ---------- Helpers ---------- */
@@ -268,28 +240,22 @@ const $ = (id) => document.getElementById(id);
 const editor = $('editor');
 const previewPane = $('previewPane');
 const preview = $('preview');
+const nameInput = $('titleInput');
 
 function activeDoc() {
-  return docs.find(d => d.path === activePath) || null;
+  return docs.find(d => d.name === activeName) || null;
 }
 
-function storyNum(path) {
-  const m = path.match(/story(\d+)/);
-  return m ? Number(m[1]) : 0;
+function uniqueName(base) {
+  if (!docs.some(d => d.name === base)) return base;
+  for (let i = 2; ; i++) {
+    const candidate = base + '-' + i;
+    if (!docs.some(d => d.name === candidate)) return candidate;
+  }
 }
 
-function isEn(path) { return path.endsWith('.en.md'); }
-
-function labelOf(path) {
-  const base = path.split('/').pop().replace(/\.md$/i, '');
-  const en = base.endsWith('.en');
-  const stem = en ? base.slice(0, -3) : base;
-  const name = stem.charAt(0).toUpperCase() + stem.slice(1);
-  return name + (en ? '(en-US)' : '(zh-CN)');
-}
-
-function todayCst() {
-  return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Shanghai' }).format(new Date());
+function sanitizeName(raw) {
+  return raw.trim().replace(/[\\/:*?"<>|]/g, '-').replace(/\s+/g, ' ');
 }
 
 function formatClock(d) {
@@ -342,22 +308,16 @@ function renderChrome() {
   const doc = activeDoc();
   const has = !!doc;
   $('panes').style.display = has ? '' : 'none';
-  $('fmBar').style.display = has ? '' : 'none';
   $('statusbar').style.display = has ? '' : 'none';
   $('toolbarWrap').style.display = has ? '' : 'none';
   $('welcome').hidden = has;
-  $('titleInput').disabled = !has;
-  $('titleInput').value = has ? doc.title : '';
-  $('fmDate').value = has ? doc.date : '';
-  $('fmDate').max = todayCst();
-  $('fmPath').textContent = has ? labelOf(doc.path) : '';
-  $('fmDraft').hidden = !(has && doc.draft);
-  $('publishBtn').hidden = !(has && doc.draft);
+  nameInput.disabled = !has;
+  nameInput.value = has ? doc.name : '';
   if (has) setSaveLabel('已保存', false);
 }
 
-function openDoc(path) {
-  activePath = path;
+function openDoc(name) {
+  activeName = name;
   const doc = activeDoc();
   editor.value = doc ? doc.body : '';
   renderChrome();
@@ -485,52 +445,43 @@ function renderToolbars() {
   mobile.appendChild(sw);
 }
 
-/* ---------- Drawer ---------- */
+/* ---------- Drawer (document list) ---------- */
 function renderDrawer() {
   const list = $('drawerList');
   list.innerHTML = '';
-  const sorted = [...docs].sort((a, b) =>
-    storyNum(b.path) - storyNum(a.path) || (isEn(a.path) ? 1 : 0) - (isEn(b.path) ? 1 : 0));
-  if (!sorted.length) {
+  if (!docs.length) {
     const li = document.createElement('li');
     li.className = 'drawer-empty';
-    li.textContent = '暂无文章';
+    li.textContent = '暂无文档';
     list.appendChild(li);
     return;
   }
-  for (const doc of sorted) {
+  for (const doc of docs) {
     const li = document.createElement('li');
-    li.className = 'drawer-item' + (doc.path === activePath ? ' active' : '');
+    li.className = 'drawer-item' + (doc.name === activeName ? ' active' : '');
     const open = document.createElement('button');
     open.type = 'button';
     open.className = 'drawer-open';
     const name = document.createElement('span');
     name.className = 'doc-label';
-    name.textContent = labelOf(doc.path);
+    name.textContent = doc.name + '.md';
     open.appendChild(name);
-    if (doc.draft) {
-      const d = document.createElement('span');
-      d.className = 'doc-draft';
-      d.title = '草稿';
-      d.innerHTML = ICONS.draft;
-      open.appendChild(d);
-    }
     open.addEventListener('click', () => {
-      openDoc(doc.path);
+      openDoc(doc.name);
       $('drawerRoot').hidden = true;
     });
     const del = document.createElement('button');
     del.type = 'button';
     del.className = 'drawer-del';
-    del.setAttribute('aria-label', '删除 ' + labelOf(doc.path));
+    del.setAttribute('aria-label', '删除 ' + doc.name);
     del.title = '删除';
     del.innerHTML = ICONS.trash;
     del.addEventListener('click', () => {
-      if (!confirm('删除 ' + labelOf(doc.path) + '？')) return;
-      docs = docs.filter(d => d.path !== doc.path);
-      if (activePath === doc.path) activePath = docs.length ? docs[0].path : null;
+      if (!confirm('删除 ' + doc.name + '.md？')) return;
+      docs = docs.filter(d => d.name !== doc.name);
+      if (activeName === doc.name) activeName = docs.length ? docs[0].name : null;
       persist();
-      if (activeDoc()) openDoc(activePath); else renderChrome();
+      if (activeDoc()) openDoc(activeName); else renderChrome();
       renderDrawer();
     });
     li.appendChild(open);
@@ -539,119 +490,135 @@ function renderDrawer() {
   }
 }
 
-/* ---------- Header actions ---------- */
-function maxStoryNum() {
-  return docs.reduce((m, d) => Math.max(m, storyNum(d.path)), 0);
-}
-
-function createDoc(path) {
-  const doc = { path, title: '', date: todayCst(), draft: true, body: '' };
+/* ---------- Create / rename / import ---------- */
+function createDoc() {
+  const doc = { name: uniqueName('untitled'), body: '' };
   docs.push(doc);
   persist();
-  openDoc(path);
+  openDoc(doc.name);
   renderDrawer();
-  $('titleInput').focus();
-  return doc;
+  editor.focus();
 }
 
-function handleNew() {
-  createDoc('posts/story' + (maxStoryNum() + 1) + '.md');
-}
-
-function handleNewEn() {
-  const cur = activeDoc();
-  let base = null;
-  if (cur && !isEn(cur.path)) base = cur.path;
-  else {
-    const zh = docs.filter(d => !isEn(d.path)).sort((a, b) => storyNum(b.path) - storyNum(a.path))[0];
-    if (zh) base = zh.path;
-  }
-  if (!base) { toast('先新建一篇文章，再添加英文版'); return; }
-  const enPath = base.replace(/\.md$/, '.en.md');
-  if (docs.some(d => d.path === enPath)) { toast('英文版已存在'); return; }
-  createDoc(enPath);
-}
-
-function handlePublish() {
+function commitRename() {
   const doc = activeDoc();
-  if (!doc || !doc.draft) return;
-  doc.draft = false;
+  if (!doc) return;
+  let n = sanitizeName(doc.name) || 'untitled';
+  if (docs.some(d => d !== doc && d.name === n)) n = uniqueName(n);
+  doc.name = n;
+  activeName = n;
+  nameInput.value = n;
   persist();
-  renderChrome();
   renderDrawer();
-  toast('已发布');
 }
 
-function handleBuild() {
-  renderPreview();
-  toast('生成完成（本机演示）');
+/* ---------- Export: .md / HTML / PDF ---------- */
+const EXPORT_CSS = [
+  'body{margin:0;background:#fff;color:#1a1815}',
+  '.md-preview{max-width:760px;margin:0 auto;padding:32px 20px 64px;font-family:Georgia,"Noto Serif SC","Songti SC","STSong",serif;font-size:16px;line-height:1.75;overflow-wrap:break-word}',
+  '.md-preview>*:first-child{margin-top:0}',
+  '.md-preview h1,.md-preview h2,.md-preview h3,.md-preview h4,.md-preview h5,.md-preview h6{font-weight:700;line-height:1.35;margin:1.4em 0 .55em}',
+  '.md-preview h1{font-size:1.75em;padding-bottom:.3em;border-bottom:1px solid #ddd8cc}',
+  '.md-preview h2{font-size:1.45em;padding-bottom:.25em;border-bottom:1px solid #ddd8cc}',
+  '.md-preview h3{font-size:1.22em}.md-preview h4{font-size:1.05em}',
+  '.md-preview p{margin:.7em 0}',
+  '.md-preview a{color:#c8401f;text-decoration:underline;text-underline-offset:3px}',
+  '.md-preview ul,.md-preview ol{margin:.7em 0;padding-left:1.6em}',
+  '.md-preview li{margin:.25em 0}',
+  '.md-preview blockquote{margin:.9em 0;padding:.15em 0 .15em 1em;border-left:3px solid #c8401f;color:#6f6a61}',
+  '.md-preview code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.86em;background:#efede6;padding:.12em .35em;border-radius:4px}',
+  '.md-preview pre{background:#efede6;border:1px solid #ddd8cc;border-radius:8px;padding:.9em 1em;overflow-x:auto;line-height:1.55}',
+  '.md-preview pre code{background:transparent;padding:0}',
+  '.md-preview hr{border:none;border-top:1px solid #ddd8cc;margin:1.6em 0}',
+  '.md-preview table{border-collapse:collapse;margin:.9em 0;display:block;overflow-x:auto;max-width:100%}',
+  '.md-preview th,.md-preview td{border:1px solid #ddd8cc;padding:.45em .8em;text-align:left;font-size:.92em}',
+  '.md-preview th{background:#efede6;font-weight:700}',
+  '.md-preview img{max-width:100%;height:auto;border-radius:8px}',
+  '.md-preview input[type="checkbox"]{margin-right:.45em;accent-color:#c8401f}',
+  '.md-preview .footnotes{font-size:.88em;color:#6f6a61;margin-top:1.4em}',
+  '.md-preview .footnote-ref{font-size:.85em}',
+  '.md-preview li.task-list-item{list-style:none}',
+  '@media print{.md-preview{max-width:none}}',
+].join('\n');
+
+function standaloneHtml(doc, forPrint) {
+  return '<!DOCTYPE html>\n<html lang="zh-CN">\n<head>\n<meta charset="utf-8">\n<title>' +
+    escapeHtml(doc.name) + '</title>\n<style>\n' + EXPORT_CSS + '\n</style>\n</head>\n<body>\n' +
+    '<article class="md-preview">' + renderMarkdown(doc.body) + '</article>\n' +
+    (forPrint ? '<script>window.addEventListener("load",function(){setTimeout(function(){window.print()},100)})<\/script>\n' : '') +
+    '</body>\n</html>';
 }
 
-function handleBuild25() {
-  if (!docs.length) return;
-  if (!confirm('生成 25% 会把全部文章正文截取到前 25%，并在文末加上解锁全文链接。继续？')) return;
-  let changed = 0;
-  for (const doc of docs) {
-    if (doc.body.includes('trimmed')) continue;
-    const total = doc.body.length;
-    if (!total) continue;
-    const target = Math.floor(total * 0.25);
-    const lines = doc.body.split('\n');
-    const kept = [];
-    let acc = 0;
-    for (const line of lines) {
-      if (acc >= target && kept.length) break;
-      kept.push(line);
-      acc += line.length + 1;
+function downloadFile(filename, text, type) {
+  const blob = new Blob([text], { type });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function doExport(kind) {
+  const doc = activeDoc();
+  if (!doc) return;
+  const base = sanitizeName(doc.name) || 'untitled';
+  if (kind === 'md') {
+    downloadFile(base + '.md', doc.body, 'text/markdown;charset=utf-8');
+    toast('已导出 ' + base + '.md');
+  } else if (kind === 'html') {
+    downloadFile(base + '.html', standaloneHtml(doc, false), 'text/html;charset=utf-8');
+    toast('已导出 ' + base + '.html');
+  } else if (kind === 'pdf') {
+    const w = window.open('', '_blank');
+    if (!w) {
+      downloadFile(base + '.html', standaloneHtml(doc, false), 'text/html;charset=utf-8');
+      toast('弹窗被拦截，已改为下载 HTML');
+      return;
     }
-    const en = isEn(doc.path);
-    doc.body = kept.join('\n').replace(/\n+$/, '') +
-      (en ? '\n\n...\n\n[Unlock full text](/en/)' : '\n\n……\n\n[解锁全文](/)') +
-      '\n\n<!-- trimmed -->';
-    changed++;
+    w.document.open();
+    w.document.write(standaloneHtml(doc, true));
+    w.document.close();
+    toast('在打印对话框里选择「另存为 PDF」');
   }
-  persist();
-  if (activeDoc()) { editor.value = activeDoc().body; renderPreview(); }
-  toast(changed ? '已生成 25%（本机演示）' : '没有需要截取的文章');
 }
 
 /* ---------- Wiring ---------- */
 function init() {
   $('menuBtn').innerHTML = ICONS.menu;
-  $('buildBtn').innerHTML = ICONS.wrench;
-  $('build25Btn').innerHTML = ICONS.truncate;
   $('newBtn').innerHTML = ICONS.plus;
-  $('newEnBtn').innerHTML = ICONS.endoc;
   $('paneBtn').innerHTML = ICONS.eye;
-  $('fmDraft').innerHTML = ICONS.draft;
+  $('exportBtn').innerHTML = ICONS.download;
+  $('back-home-link').innerHTML = ICONS.home;
 
   loadStore();
   renderToolbars();
   renderDrawer();
-  if (activeDoc()) openDoc(activePath);
+  if (activeDoc()) openDoc(activeName);
   else renderChrome();
 
   editor.addEventListener('input', syncFromEditor);
-  editor.addEventListener('blur', () => { clearTimeout(saveTimer); persist(); if (activeDoc()) setSaveLabel('已保存 ' + formatClock(new Date()), false); });
+  editor.addEventListener('blur', () => {
+    clearTimeout(saveTimer);
+    persist();
+    if (activeDoc()) setSaveLabel('已保存 ' + formatClock(new Date()), false);
+  });
   editor.addEventListener('scroll', () => {
     const maxTa = editor.scrollHeight - editor.clientHeight;
     const maxPv = previewPane.scrollHeight - previewPane.clientHeight;
     if (maxTa > 0 && maxPv > 0) previewPane.scrollTop = (editor.scrollTop / maxTa) * maxPv;
   });
 
-  $('titleInput').addEventListener('input', (e) => {
+  nameInput.addEventListener('input', () => {
     const doc = activeDoc();
     if (!doc) return;
-    doc.title = e.target.value;
+    doc.name = nameInput.value;
+    activeName = doc.name;
     markDirty();
   });
-  $('fmDate').addEventListener('change', (e) => {
-    const doc = activeDoc();
-    if (!doc) return;
-    if (e.target.value > todayCst()) { e.target.value = doc.date; return; }
-    doc.date = e.target.value;
-    markDirty();
-  });
+  nameInput.addEventListener('blur', commitRename);
 
   $('paneBtn').addEventListener('click', () => {
     const app = $('app');
@@ -667,12 +634,32 @@ function init() {
 
   $('menuBtn').addEventListener('click', () => { renderDrawer(); $('drawerRoot').hidden = false; });
   $('drawerBackdrop').addEventListener('click', () => { $('drawerRoot').hidden = true; });
-  $('newBtn').addEventListener('click', handleNew);
-  $('newEnBtn').addEventListener('click', handleNewEn);
-  $('welcomeNew').addEventListener('click', handleNew);
-  $('publishBtn').addEventListener('click', handlePublish);
-  $('buildBtn').addEventListener('click', handleBuild);
-  $('build25Btn').addEventListener('click', handleBuild25);
+  $('newBtn').addEventListener('click', createDoc);
+  $('welcomeNew').addEventListener('click', createDoc);
+
+  const exportMenu = $('exportMenu');
+  $('exportBtn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    const open = exportMenu.hidden;
+    exportMenu.hidden = !open;
+    $('exportBtn').setAttribute('aria-expanded', String(open));
+  });
+  exportMenu.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-export]');
+    if (!btn) return;
+    exportMenu.hidden = true;
+    $('exportBtn').setAttribute('aria-expanded', 'false');
+    doExport(btn.getAttribute('data-export'));
+  });
+  document.addEventListener('click', (e) => {
+    if (!exportMenu.hidden && !e.target.closest('.export-wrap')) {
+      exportMenu.hidden = true;
+      $('exportBtn').setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') exportMenu.hidden = true;
+  });
 
   $('importBtn').addEventListener('click', () => $('importInput').click());
   $('importInput').addEventListener('change', (e) => {
@@ -680,19 +667,16 @@ function init() {
     e.target.value = '';
     if (!file) return;
     file.text().then((text) => {
-      let title = '', date = todayCst(), draft = true, body = text;
-      const fm = text.match(/^---\n([\s\S]*?)\n---\n?/);
-      if (fm) {
-        body = text.slice(fm[0].length);
-        const t = fm[1].match(/^title:\s*"?([^"\n]*)"?/m); if (t) title = t[1].trim();
-        const d = fm[1].match(/^date:\s*(\d{4}-\d{2}-\d{2})/m); if (d) date = d[1];
-        draft = !/^draft:\s*false/m.test(fm[1]);
-      }
-      const doc = { path: 'posts/story' + (maxStoryNum() + 1) + '.md', title, date, draft, body };
+      // Imported files are plain documents: any front matter block is
+      // dropped instead of being shown in the editor.
+      const body = text.replace(/^---\n[\s\S]*?\n---\n?/, '');
+      const stem = sanitizeName(file.name.replace(/\.md$/i, '')) || 'untitled';
+      const doc = { name: uniqueName(stem), body };
       docs.push(doc);
       persist();
-      openDoc(doc.path);
+      openDoc(doc.name);
       renderDrawer();
+      $('drawerRoot').hidden = true;
       toast('已导入 ' + file.name);
     });
   });

@@ -12,27 +12,26 @@
 <div id="app" class="mode-split">
   <header class="app-header">
     <div class="header-row">
-      <button type="button" class="tool-btn" id="menuBtn" aria-label="文章列表"></button>
+      <a class="tool-btn home-link" id="back-home-link" href="index.html" aria-label="返回首页" title="返回首页"></a>
+      <button type="button" class="tool-btn" id="menuBtn" aria-label="文档列表"></button>
       <span class="header-spacer"></span>
       <span class="save-label" id="saveLabel" aria-live="polite"></span>
-      <button type="button" class="tool-btn" id="buildBtn" aria-label="生成网站" title="生成"></button>
-      <button type="button" class="tool-btn" id="build25Btn" aria-label="生成 25% 网站" title="生成 25%（先截取到 25% 再生成）"></button>
       <button type="button" class="tool-btn" id="paneBtn" aria-label="预览" title="预览" aria-pressed="false"></button>
       <button type="button" class="tool-btn" id="newBtn" aria-label="新建文章" title="新建文章"></button>
-      <button type="button" class="tool-btn" id="newEnBtn" aria-label="新建英文文章" title="新建英文文章"></button>
-      <button type="button" class="publish-btn" id="publishBtn" hidden>发布</button>
+      <div class="export-wrap">
+        <button type="button" class="tool-btn" id="exportBtn" aria-label="导出" title="导出" aria-haspopup="true" aria-expanded="false"></button>
+        <div class="export-menu" id="exportMenu" hidden>
+          <button type="button" data-export="md">导出 .md</button>
+          <button type="button" data-export="html">导出 HTML</button>
+          <button type="button" data-export="pdf">导出 PDF</button>
+        </div>
+      </div>
     </div>
     <div class="title-row">
-      <input id="titleInput" class="title-input" aria-label="文章标题" placeholder="隐喻与留白" spellcheck="false">
+      <input id="titleInput" class="title-input" aria-label="文件名" placeholder="untitled" spellcheck="false">
     </div>
   </header>
 
-  <div class="fm-bar" id="fmBar">
-    <label for="fmDate">日期</label>
-    <input id="fmDate" type="date" aria-label="发布日期" spellcheck="false">
-    <span class="fm-path" id="fmPath"></span>
-    <span class="fm-draft" id="fmDraft" title="草稿" aria-label="草稿" hidden></span>
-  </div>
 
   <main class="panes" id="panes">
     <div class="editor-pane" id="editorPane">
@@ -45,8 +44,8 @@
   </main>
 
   <div class="welcome" id="welcome" hidden>
-    <p class="welcome-title">还没有文章</p>
-    <p class="welcome-text">新建会生成一篇中文，左边写，右边立刻看到排版效果。支持完整 Markdown（标题、表格、任务列表、脚注），写完自动保存到本机。</p>
+    <p class="welcome-title">还没有文档</p>
+    <p class="welcome-text">新建一篇 untitled 开始写。支持完整 Markdown（标题、表格、任务列表、脚注），自动保存到本机浏览器，可导出为 .md、HTML 和 PDF。</p>
     <button type="button" class="welcome-new" id="welcomeNew">新建第一篇</button>
   </div>
 
@@ -65,7 +64,7 @@
 
   <div class="drawer-root" id="drawerRoot" hidden>
     <button type="button" class="drawer-backdrop" id="drawerBackdrop" aria-label="关闭文章列表"></button>
-    <div class="drawer" role="dialog" aria-label="文章列表">
+    <div class="drawer" role="dialog" aria-label="文档列表">
       <div class="drawer-head">
         <span class="drawer-title">文章</span>
         <button type="button" class="drawer-import" id="importBtn">导入 .md</button>
