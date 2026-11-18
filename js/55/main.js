@@ -641,6 +641,11 @@ function init() {
   $('exportBtn').addEventListener('click', (e) => {
     e.stopPropagation();
     const open = exportMenu.hidden;
+    if (open) {
+      const r = e.currentTarget.getBoundingClientRect();
+      exportMenu.style.top = (r.bottom + 6) + 'px';
+      exportMenu.style.right = Math.max(8, window.innerWidth - r.right) + 'px';
+    }
     exportMenu.hidden = !open;
     $('exportBtn').setAttribute('aria-expanded', String(open));
   });
