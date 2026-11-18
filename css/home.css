@@ -19,6 +19,27 @@
   font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
 }
 
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --background: #191c19;
+    --surface: #262b26;
+    --ink: #f1eee5;
+    --muted: #c0bcaf;
+    --border: #474d43;
+    --focus: #f1c86d;
+    --control-border: #737c6e;
+    --control-hover: #a3ac9a;
+    --selected-bg: var(--amber);
+    --selected-ink: #2c210e;
+    --card-hover-border: #a59069;
+    --card-hover-shadow: #0005;
+    --brand-icon-bg: #40351f;
+    --brand-icon-ink: #f1c86d;
+    --hero-edge: #575040;
+  }
+}
+
 html[data-theme="dark"] {
   color-scheme: dark;
   --background: #191c19;
@@ -248,6 +269,11 @@ button { cursor: pointer; }
 
 .demo-card[data-accent="blue"] { --tag-bg: #e9eefb; --tag-ink: #354981; }
 .demo-card[data-accent="green"] { --tag-bg: #e4f2e8; --tag-ink: #23533b; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .demo-card { --tag-bg: #443b29; --tag-ink: #f1d99f; }
+  :root:not([data-theme="light"]) .demo-card[data-accent="blue"] { --tag-bg: #303c4f; --tag-ink: #c8d8f5; }
+  :root:not([data-theme="light"]) .demo-card[data-accent="green"] { --tag-bg: #344438; --tag-ink: #c3ddca; }
+}
 html[data-theme="dark"] .demo-card { --tag-bg: #443b29; --tag-ink: #f1d99f; }
 html[data-theme="dark"] .demo-card[data-accent="blue"] { --tag-bg: #303c4f; --tag-ink: #c8d8f5; }
 html[data-theme="dark"] .demo-card[data-accent="green"] { --tag-bg: #344438; --tag-ink: #c3ddca; }
