@@ -1,0 +1,112 @@
+/* Invite-code receipt — vanilla CSS.
+   Pink thermal-paper receipt: layered procedural paper texture,
+   torn top/bottom edges, monospace type. Adapts to the system
+   color scheme; the page backdrop stays neutral. */
+
+:root { color-scheme: light dark; }
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 32px 16px 48px;
+  background: #efede8;
+  font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  body { background: #17161a; }
+}
+
+.en { display: none; }
+
+/* ---- Paper ---- */
+.invite {
+  background-color: #ffe3ee;
+  padding: .9rem 1rem;
+  background-image:
+    radial-gradient(135% 105% at 50% -10%, rgba(255,255,255,.12), rgba(255,255,255,0) 55%),
+    radial-gradient(120% 95% at 50% 112%, rgba(122,30,64,.07), rgba(122,30,64,0) 62%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.055 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5 0.06' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 -0.012'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.011' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 -0.045'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 100% 100%, 100% 100%, 260px 260px, 240px 240px, 300px 300px;
+  background-repeat: no-repeat, no-repeat, repeat, repeat, repeat;
+  -webkit-clip-path: polygon(0.0% 0px, 5.1% 3px, 7.7% 1px, 10.9% 2px, 14.0% 0px, 17.4% 1px, 20.9% 0px, 23.6% 2px, 28.8% 0px, 32.4% 0px, 35.7% 0px, 40.3% 1px, 45.6% 2px, 50.3% 1px, 54.2% 0px, 57.1% 2px, 61.6% 1px, 65.7% 3px, 70.9% 2px, 76.3% 3px, 81.5% 1px, 85.8% 1px, 91.1% 1px, 95.3% 0px, 99.5% 0px, 100.0% 0px, 100.0% 100%, 96.2% calc(100% - 2px), 92.9% calc(100% - 3px), 87.9% calc(100% - 2px), 85.4% calc(100% - 1px), 81.6% calc(100% - 2px), 77.1% 100%, 73.5% calc(100% - 2px), 68.8% calc(100% - 1px), 65.1% calc(100% - 1px), 60.2% calc(100% - 1px), 54.7% 100%, 50.5% calc(100% - 1px), 45.3% calc(100% - 3px), 42.2% calc(100% - 3px), 38.8% 100%, 34.8% calc(100% - 1px), 29.4% calc(100% - 1px), 26.4% calc(100% - 2px), 23.6% calc(100% - 1px), 19.6% calc(100% - 1px), 16.7% calc(100% - 2px), 12.3% 100%, 9.3% calc(100% - 2px), 4.2% calc(100% - 1px), 0.0% 100%);
+  clip-path: polygon(0.0% 0px, 5.1% 3px, 7.7% 1px, 10.9% 2px, 14.0% 0px, 17.4% 1px, 20.9% 0px, 23.6% 2px, 28.8% 0px, 32.4% 0px, 35.7% 0px, 40.3% 1px, 45.6% 2px, 50.3% 1px, 54.2% 0px, 57.1% 2px, 61.6% 1px, 65.7% 3px, 70.9% 2px, 76.3% 3px, 81.5% 1px, 85.8% 1px, 91.1% 1px, 95.3% 0px, 99.5% 0px, 100.0% 0px, 100.0% 100%, 96.2% calc(100% - 2px), 92.9% calc(100% - 3px), 87.9% calc(100% - 2px), 85.4% calc(100% - 1px), 81.6% calc(100% - 2px), 77.1% 100%, 73.5% calc(100% - 2px), 68.8% calc(100% - 1px), 65.1% calc(100% - 1px), 60.2% calc(100% - 1px), 54.7% 100%, 50.5% calc(100% - 1px), 45.3% calc(100% - 3px), 42.2% calc(100% - 3px), 38.8% 100%, 34.8% calc(100% - 1px), 29.4% calc(100% - 1px), 26.4% calc(100% - 2px), 23.6% calc(100% - 1px), 19.6% calc(100% - 1px), 16.7% calc(100% - 2px), 12.3% 100%, 9.3% calc(100% - 2px), 4.2% calc(100% - 1px), 0.0% 100%);
+  line-height: 1.5;
+}
+
+@media (prefers-color-scheme: dark) {
+  .invite {
+    background-color: #472733;
+    color: #f3d9e2;
+    background-image:
+      radial-gradient(135% 105% at 50% -10%, rgba(255,255,255,.06), rgba(255,255,255,0) 55%),
+      radial-gradient(120% 95% at 50% 112%, rgba(0,0,0,.22), rgba(0,0,0,0) 62%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5 0.06' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.06 -0.015'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.011' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.13 -0.04'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+/* ---- Receipt layout ---- */
+.receipt {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media (max-width: 640px) { .receipt { max-width: none; } }
+
+.r-logo { text-align: center; line-height: 0; margin-bottom: .4rem; }
+.r-logo img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; }
+
+.r-head { text-align: center; margin: .2rem 0 .5rem; }
+.r-store { font-size: 1.5rem; font-weight: 800; letter-spacing: .35em; text-indent: .35em; }
+.r-sub { font-size: .8rem; opacity: .6; margin-top: .2rem; }
+.r-sep { border-top: 1px dashed rgba(127,127,127,.55); margin: .55rem 0; }
+.rrow { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem; }
+.r-cols { font-size: .78rem; opacity: .55; }
+.receipt code {
+  background: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 1.55rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  vertical-align: middle;
+}
+.r-amt { font-size: 1.05rem; font-weight: 700; white-space: nowrap; }
+.r-note { font-size: .78rem; opacity: .55; margin-top: .1rem; }
+.ritem { margin: .45rem 0; }
+.r-total { font-weight: 700; }
+.r-due { font-size: 1.25rem; font-weight: 800; margin-top: .15rem; }
+.r-due .dollar { font-family: Arial, Helvetica, sans-serif; font-size: .8em; }
+.r-how { font-size: .8rem; line-height: 1.75; opacity: .8; }
+.r-barcode { height: auto; background: none; margin: .8rem auto .25rem; }
+.r-barcode svg { display: block; width: 100%; height: 36px; }
+.r-foot { text-align: center; font-size: .8rem; opacity: .6; }
+
+/* ---- Copy buttons ---- */
+.copybtn {
+  background: none;
+  border: none;
+  padding: .2em .4em;
+  cursor: pointer;
+  color: inherit;
+  vertical-align: middle;
+  line-height: 1;
+}
+.copybtn svg { display: inline-block; vertical-align: middle; width: 22px; height: 22px; }
+.copybtn:active { opacity: .7; }
+.copybtn .ic-check { display: none; }
+.copybtn.done .ic-check { display: inline-block; }
+.copybtn.done .ic-copy { display: none; }
+
+svg.threads { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
