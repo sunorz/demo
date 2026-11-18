@@ -6,6 +6,20 @@
   <title>前端小样 · Sunplace</title>
   <meta name="description" content="Sunplace 的前端实验目录，收录界面布局、动效和交互示例。">
   <link rel="stylesheet" href="css/home.css">
+  <script>
+    (() => {
+      let saved;
+      try {
+        saved = localStorage.getItem('sunplace-theme');
+      } catch {
+        // Storage may be blocked by browser settings.
+      }
+      const systemTheme = matchMedia('(prefers-color-scheme: dark)');
+      document.documentElement.dataset.theme = saved === 'light' || saved === 'dark'
+        ? saved
+        : (systemTheme.matches ? 'dark' : 'light');
+    })();
+  </script>
   <script src="js/home.js" defer></script>
 </head>
 <body>
@@ -13,6 +27,7 @@
     <div class="shell header-inner">
       <a href="./" class="brand"><span class="brand-icon" aria-hidden="true">&lt;/&gt;</span>Sunplace</a>
       <a class="source-link" href="https://github.com/sunorz/demo" target="_blank" rel="noreferrer">查看源码 <span aria-hidden="true">↗</span></a>
+      <button class="theme-toggle" type="button" aria-pressed="false" hidden>深色模式</button>
     </div>
   </header>
 
