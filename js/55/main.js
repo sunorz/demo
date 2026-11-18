@@ -591,7 +591,7 @@ function init() {
   $('newBtn').innerHTML = ICONS.plus;
   $('paneBtn').innerHTML = ICONS.eye;
   $('exportBtn').innerHTML = ICONS.download;
-  $('back-home-link').innerHTML = ICONS.home;
+  $('back-home-link').innerHTML = ICONS.home + '<span>首页</span>';
 
   loadStore();
   renderToolbars();

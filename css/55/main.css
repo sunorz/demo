@@ -389,7 +389,7 @@ button:disabled { opacity: .4; cursor: default; }
 .md-preview li.task-list-item { list-style: none; }
 
 /* ---- Header extras: home link + export menu ---- */
-.home-link { text-decoration: none; }
+.home-link { width: auto; padding: 0 14px; gap: 6px; border-radius: 999px; font-size: 14px; font-weight: 600; text-decoration: none; }
 .export-wrap { position: relative; flex: none; }
 .export-menu {
   position: fixed;
