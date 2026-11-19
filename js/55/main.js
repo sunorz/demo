@@ -32,17 +32,100 @@ function escapeHtml(s) {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
+/* ---------- Math (KaTeX) ---------- */
+// Render one math span. Falls back to the raw source as code text when
+// KaTeX is not loaded or fails, so the source stays visible.
+function renderMathHtml(tex, display, open, close) {
+  if (typeof katex !== 'undefined') {
+    try {
+      return katex.renderToString(tex, { displayMode: display, throwOnError: false });
+    } catch (e) { /* fall through to raw */ }
+  }
+  return '<code>' + escapeHtml(open + tex + close) + '</code>';
+}
+
+// Render a display-math block. KaTeX's own CSS makes .katex-display a
+// block; the fallback shows the raw $$...$$ source as code.
+function renderMathBlock(tex) {
+  if (typeof katex !== 'undefined') {
+    try {
+      return katex.renderToString(tex, { displayMode: true, throwOnError: false });
+    } catch (e) { /* fall through */ }
+  }
+  return '<pre><code>' + escapeHtml('$$' + tex + '$$') + '</code></pre>';
+}
+
 function renderInline(text, nums) {
   const codes = [];
+  const maths = [];
+  const htmls = [];
+  const escs = [];
+  // Inline code first: $ and \ inside a code span are literal.
   text = text.replace(/`([^`\n]+)`/g, (m, c) => {
     codes.push(c);
     return '\u0000' + (codes.length - 1) + '\u0000';
   });
+  // Escaped dollars \$ stay literal, so they never open a math span.
+  // (Only \$ is pre-protected; other backslash escapes run after math,
+  // so \[ \( inside a math pair are still recognised as delimiters.)
+  text = text.replace(/\\\$/g, (m) => {
+    escs.push('$');
+    return '\u0003' + (escs.length - 1) + '\u0003';
+  });
+  // Display math $$...$$ and \[...\] (single line here; multi-line
+  // display blocks are handled in renderBlocks).
+  text = text.replace(/\$\$([^\n]+?)\$\$/g, (m, tex) => {
+    maths.push({ tex: tex, display: true, open: '$$', close: '$$' });
+    return '\u0001' + (maths.length - 1) + '\u0001';
+  });
+  text = text.replace(/\\\[([^\n]+?)\\\]/g, (m, tex) => {
+    maths.push({ tex: tex, display: true, open: '\\[', close: '\\]' });
+    return '\u0001' + (maths.length - 1) + '\u0001';
+  });
+  // Inline math \(...\) and $...$. For $...$ the opening $ needs a
+  // non-space after it and the closing $ a non-space before it, so
+  // $5 and $10 stay as dollars.
+  text = text.replace(/\\\((.+?)\\\)/g, (m, tex) => {
+    maths.push({ tex: tex, display: false, open: '\\(', close: '\\)' });
+    return '\u0001' + (maths.length - 1) + '\u0001';
+  });
+  text = text.replace(/\$(\S(?:[^$\n]*\S)?)\$/g, (m, tex) => {
+    maths.push({ tex: tex, display: false, open: '$', close: '$' });
+    return '\u0001' + (maths.length - 1) + '\u0001';
+  });
+  // Backslash escapes: \* \_ \\ \[ \] \` etc. become literal chars.
+  // (\[ \( that did not form a math pair fall through to here.)
+  text = text.replace(/\\([\\`*_{}[\]()#+\-.!|~<>])/g, (m, ch) => {
+    escs.push(ch);
+    return '\u0003' + (escs.length - 1) + '\u0003';
+  });
+  // Angle autolinks <https://...> and <name@example.com>.
+  text = text.replace(/<((?:https?:\/\/|ftp:\/\/)[^<>\s]+)>/g, (m, url) => {
+    htmls.push('<a href="' + escapeHtml(url) + '">' + escapeHtml(url) + '</a>');
+    return '\u0002' + (htmls.length - 1) + '\u0002';
+  });
+  text = text.replace(/<([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})>/g, (m, addr) => {
+    htmls.push('<a href="mailto:' + escapeHtml(addr) + '">' + escapeHtml(addr) + '</a>');
+    return '\u0002' + (htmls.length - 1) + '\u0002';
+  });
+  // Raw HTML tags pass through (Goldmark unsafe = true, like the blog).
+  text = text.replace(/<\/?[A-Za-z][^<>]*>/g, (m) => {
+    htmls.push(m);
+    return '\u0002' + (htmls.length - 1) + '\u0002';
+  });
   text = escapeHtml(text);
+  // Hard breaks: two trailing spaces, or a backslash, before a newline.
+  text = text.replace(/  \n/g, '<br>\n');
+  text = text.replace(/\\\n/g, '<br>\n');
   text = text.replace(/!\[([^\]]*)\]\(([^)\s]+)(?:\s+&quot;([^&]*)&quot;)?\)/g,
     (m, alt, src, title) => '<img src="' + src + '" alt="' + alt + '"' + (title ? ' title="' + title + '"' : '') + '>');
   text = text.replace(/\[([^\]]+)\]\(([^)\s]+)(?:\s+&quot;([^&]*)&quot;)?\)/g,
     (m, t, href, title) => '<a href="' + href + '"' + (title ? ' title="' + title + '"' : '') + '>' + t + '</a>');
+  // Bare URLs (not inside an attribute or a link text).
+  text = text.replace(/(^|[^"'=\w>])((?:https?:\/\/|ftp:\/\/)[^\s<>"')\]]+)/g,
+    (m, pre, url) => pre + '<a href="' + url + '">' + url + '</a>');
+  text = text.replace(/(^|[^"'=\w>])((?:www\.)[^\s<>"')\]]+)/g,
+    (m, pre, url) => pre + '<a href="https://' + url + '">' + url + '</a>');
   text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
   text = text.replace(/__([^_]+)__/g, '<strong>$1</strong>');
   text = text.replace(/\*([^*\n]+)\*/g, '<em>$1</em>');
@@ -52,6 +135,13 @@ function renderInline(text, nums) {
     if (n == null) return m;
     return '<sup class="footnote-ref" id="fnref-' + label + '"><a href="#fn-' + label + '">[' + n + ']</a></sup>';
   });
+  text = text.replace(/\u0001(\d+)\u0001/g, (m, i) => {
+    // Restore any backslash escapes that were protected inside the math.
+    const tex = maths[+i].tex.replace(/\u0003(\d+)\u0003/g, (mm, j) => escs[+j]);
+    return renderMathHtml(tex, maths[+i].display, maths[+i].open, maths[+i].close);
+  });
+  text = text.replace(/\u0002(\d+)\u0002/g, (m, i) => htmls[+i]);
+  text = text.replace(/\u0003(\d+)\u0003/g, (m, i) => escapeHtml(escs[+i]));
   text = text.replace(/\u0000(\d+)\u0000/g, (m, i) => '<code>' + escapeHtml(codes[+i]) + '</code>');
   return text;
 }
@@ -110,6 +200,40 @@ function renderBlocks(lines, nums) {
     const line = lines[i];
     if (line.trim() === '') { i++; continue; }
 
+    // Display math block: $$ ... $$ or \[ ... \] (may span lines).
+    if (/^\$\$/.test(line) || /^\\\[/.test(line)) {
+      const isDollar = line.startsWith('$$');
+      const closeRe = isDollar ? /\$\$/ : /\\\]/;
+      let tex = line.slice(2);
+      let rest = '';
+      const closeIdx = tex.search(closeRe);
+      if (closeIdx !== -1) {
+        rest = tex.slice(closeIdx + 2);
+        tex = tex.slice(0, closeIdx);
+        html += renderMathBlock(tex.trim());
+        i++;
+        if (rest.trim()) lines.splice(i, 0, rest);
+        continue;
+      }
+      const buf = [tex];
+      i++;
+      while (i < lines.length) {
+        const l = lines[i];
+        const end = l.search(closeRe);
+        if (end !== -1) {
+          buf.push(l.slice(0, end));
+          rest = l.slice(end + 2);
+          i++;
+          break;
+        }
+        buf.push(l);
+        i++;
+      }
+      html += renderMathBlock(buf.join('\n').trim());
+      if (rest.trim()) lines.splice(i, 0, rest);
+      continue;
+    }
+
     const fence = line.match(/^```(\w*)\s*$/);
     if (fence) {
       const buf = [];
@@ -130,6 +254,22 @@ function renderBlocks(lines, nums) {
 
     if (/^\s*([-*_])(\s*\1){2,}\s*$/.test(line)) { html += '<hr>'; i++; continue; }
 
+    // Indented code block (4 spaces or a tab). It cannot interrupt a
+    // paragraph: a paragraph absorbs its indented continuation lines,
+    // so this only fires at a block start.
+    if (/^(    |\t)/.test(line)) {
+      const buf = [];
+      while (i < lines.length && /^(    |\t)/.test(lines[i])) {
+        buf.push(lines[i].replace(/^(    |\t)/, ''));
+        i++;
+      }
+      while (buf.length && buf[buf.length - 1].trim() === '') buf.pop();
+      if (buf.length) {
+        html += '<pre><code>' + escapeHtml(buf.join('\n')) + '</code></pre>';
+        continue;
+      }
+    }
+
     if (line.includes('|') && i + 1 < lines.length && isTableSep(lines[i + 1])) {
       const header = splitRow(line);
       const aligns = splitRow(lines[i + 1]).map(c =>
@@ -147,6 +287,16 @@ function renderBlocks(lines, nums) {
         '</tr></thead><tbody>' +
         rows.map(r => '<tr>' + header.map((_, k) => cell('td', r[k] || '', aligns[k])).join('') + '</tr>').join('') +
         '</tbody></table>';
+      continue;
+    }
+
+    // Raw HTML block: a line starting with a block-level tag or comment
+    // passes through unwrapped (Goldmark unsafe = true, like the blog).
+    if (/^<(div|p|h[1-6]|ul|ol|li|table|thead|tbody|tfoot|tr|td|th|blockquote|pre|hr|section|article|header|footer|nav|figure|figcaption|dl|dt|dd|!--)[\s>]/.test(line)) {
+      const buf = [line];
+      i++;
+      while (i < lines.length && lines[i].trim() !== '') { buf.push(lines[i]); i++; }
+      html += buf.join('\n');
       continue;
     }
 
@@ -173,9 +323,23 @@ function renderBlocks(lines, nums) {
     while (i < lines.length && lines[i].trim() !== '' &&
            !/^(#{1,6})\s/.test(lines[i]) && !/^```/.test(lines[i]) &&
            !/^\s*>/.test(lines[i]) && !/^(\s*)([-*+]|\d+[.)])\s+/.test(lines[i]) &&
+           !/^=+\s*$/.test(lines[i]) && !/^-+\s*$/.test(lines[i]) &&
+           !/^\$\$/.test(lines[i]) && !/^\\\[/.test(lines[i]) &&
+           !/^<(div|p|h[1-6]|ul|ol|li|table|thead|tbody|tfoot|tr|td|th|blockquote|pre|hr|section|article|header|footer|nav|figure|figcaption|dl|dt|dd|!--)[\s>]/.test(lines[i]) &&
            !(lines[i].includes('|') && i + 1 < lines.length && isTableSep(lines[i + 1]))) {
       buf.push(lines[i]);
       i++;
+    }
+    // Setext heading: a paragraph followed by === (h1) or --- (h2).
+    if (i < lines.length && /^=+\s*$/.test(lines[i])) {
+      html += '<h1>' + renderInline(buf.join('\n'), nums) + '</h1>';
+      i++;
+      continue;
+    }
+    if (i < lines.length && /^-+\s*$/.test(lines[i])) {
+      html += '<h2>' + renderInline(buf.join('\n'), nums) + '</h2>';
+      i++;
+      continue;
     }
     html += '<p>' + renderInline(buf.join('\n'), nums) + '</p>';
   }

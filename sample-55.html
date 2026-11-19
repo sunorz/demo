@@ -6,7 +6,9 @@
 <meta name="color-scheme" content="light dark">
 <title>Markdown 编辑器 · 隐喻与留白</title>
 <link rel="stylesheet" href="./css/55/main.css?v=3">
-<script src="./js/55/main.js?v=3" defer></script>
+<link rel="stylesheet" href="./lib/katex/katex.min.css?v=1">
+<script src="./lib/katex/katex.min.js?v=1" defer></script>
+<script src="./js/55/main.js?v=4" defer></script>
 </head>
 <body>
 <div id="app" class="mode-split">
@@ -35,7 +37,7 @@
 
   <main class="panes" id="panes">
     <div class="editor-pane" id="editorPane">
-      <textarea id="editor" aria-label="Markdown 编辑区" spellcheck="false" placeholder="在这里写 Markdown（支持粗体、斜体、列表、引用、链接、标题和脚注）…"></textarea>
+      <textarea id="editor" aria-label="Markdown 编辑区" spellcheck="false" placeholder="在这里写 Markdown（支持粗体、斜体、列表、引用、链接、标题、脚注和公式）…"></textarea>
     </div>
     <div class="pane-divider" id="paneDivider"></div>
     <div class="preview-pane" id="previewPane" aria-label="预览区">
@@ -45,7 +47,7 @@
 
   <div class="welcome" id="welcome" hidden>
     <p class="welcome-title">还没有文档</p>
-    <p class="welcome-text">新建一篇 untitled 开始写。支持完整 Markdown（标题、表格、任务列表、脚注），自动保存到本机浏览器，可导出为 .md、HTML 和 PDF。</p>
+    <p class="welcome-text">新建一篇 untitled 开始写。支持完整 Markdown（标题、表格、任务列表、脚注、公式），自动保存到本机浏览器，可导出为 .md、HTML 和 PDF。</p>
     <button type="button" class="welcome-new" id="welcomeNew">新建第一篇</button>
   </div>
 
